@@ -17,8 +17,8 @@ doc_before_both = 'this is a *delete* piece of sample text'
 doc_after_both = 'this is a piece of sample text *add*'
 
 # 5 Addition & Deletion
-doc_before_both = 'this is a piece of sample text *delete*'
-doc_after_both = 'this is a *add* piece of sample text'
+doc_before_both_swap = 'this is a piece of sample text *delete*'
+doc_after_both_swap = 'this is a *add* piece of sample text'
 
 # Data Structure for Changes
 class ChChChChanges():
@@ -84,21 +84,23 @@ def get_diff(doc_before :str, doc_after :str, view_size :int, retrieval_buffer :
                     break
 
             # We cant find it! lets try to go from after->before
+            # crucial as it accounts for docs being different lens and addition / del happening in any order for any length doc
+            # see running 4 vs 5
             if found == False:
                 count = 0
                 idx_before_seek = idx_before
                 while(idx_after_seek < len(doc_before)):   
 
                     # get retrieval text
-                    retreival_after = doc_before[idx_after] + doc_before[idx_after:idx_after+retrieval_buffer]
-                    retreival_before = doc_after[idx_before_seek] + doc_after[idx_before_seek:idx_before_seek+retrieval_buffer]
+                    retreival_after = doc_after[idx_after:idx_after+retrieval_buffer]
+                    retreival_before = doc_before[idx_before_seek:idx_before_seek+retrieval_buffer]
 
                     if retreival_after != retreival_before:
                         idx_before_seek+=1
-                        count+1
+                        count+=1
                     else:
                         #if you find it, save the text between idx_after - count
-                        comparison_collector.append_change_text(doc_after_match[idx_before_seek-count: idx_before_seek])
+                        comparison_collector.append_change_text(doc_before[idx_before_seek-count: idx_before_seek])
                         idx_before = idx_before_seek #found it, so we can move this the after text along. 
                         break   
 
