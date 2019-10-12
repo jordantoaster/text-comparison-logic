@@ -1,0 +1,29 @@
+Requirements
+-------------
+
+- Detect 'changes' - type and granularity are extensions of this.
+- Return results in a way that can be painted onto the original PDF
+
+
+Match-Patch-Diff
+-----------------
+- We cant control the internal workings of the algorithm
+- Its mandating complexity due to 'odd' behaviours (length of input etc) -> sliding window
+
+
+Plan
+-----
+
+- For a given pair of input strings, can each in character sequence ('view' size of 1).
+- Detect a change / mismatch - continue until the text is matching again via a word match (character can clash early).
+- Return data structure which contains text that is changed, and what string it belonged to.
+
+
+TODO
+----
+- change 'view' to differing sizes
+- write unit tests on approach
+- Increase input complexity and size from the simplest possible position (all text matches - one char change ... etc)
+- Is there existing other logic and approaches we can leverage? Google! text difference comparison - libraries already?
+- Text similarity could also be useful as a means to match up once again.
+- When a change occurs, can we just show both text until we match again?
