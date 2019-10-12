@@ -1,25 +1,3 @@
-# INPUT VARIATIONS
-
-# 1 Matching Text
-doc_before_match = 'this is a matching string, it is a simple example'
-doc_after_match = 'this is a matching string, it is a simple example'
-
-# 2 Addition Mid
-doc_before_addition = 'this is a matching string -  - it is a simple example'
-doc_after_addition = 'this is a matching string - new text inserted here - it is a simple example'
-
-# 3 Deletion Mid
-doc_before_deletion = 'this is a matching string - old text deleted here - it is a simple example'
-doc_after_deletion = 'this is a matching string -  - it is a simple example'
-
-# 4 Deletion & Addition
-doc_before_both = 'this is a *delete* piece of sample text'
-doc_after_both = 'this is a piece of sample text *add*'
-
-# 5 Addition & Deletion
-doc_before_both_swap = 'this is a piece of sample text *delete*'
-doc_after_both_swap = 'this is a *add* piece of sample text'
-
 # Data Structure for Changes
 class ChChChChanges():
 
@@ -41,8 +19,8 @@ class ChChChChanges():
         print(self.matching_text)
         print('----BREAK----')
         print(self.changed_text)
-        print('----BREAK----')
-        print(self.changes)
+        # print('----BREAK----')
+        # print(self.changes)
 
 
 # Stock Python Implementation
@@ -83,13 +61,13 @@ def get_diff(doc_before :str, doc_after :str, view_size :int, retrieval_buffer :
                     found = True
                     break
 
-            # We cant find it! lets try to go from after->before
+            # We cant find it! lets try to go from after->before - typical for deletions
             # crucial as it accounts for docs being different lens and addition / del happening in any order for any length doc
             # see running 4 vs 5
             if found == False:
                 count = 0
                 idx_before_seek = idx_before
-                while(idx_after_seek < len(doc_before)):   
+                while(idx_before_seek < len(doc_before)):   
 
                     # get retrieval text
                     retreival_after = doc_after[idx_after:idx_after+retrieval_buffer]
@@ -103,6 +81,9 @@ def get_diff(doc_before :str, doc_after :str, view_size :int, retrieval_buffer :
                         comparison_collector.append_change_text(doc_before[idx_before_seek-count: idx_before_seek])
                         idx_before = idx_before_seek #found it, so we can move this the after text along. 
                         break   
+            
+            # I cant find the word, so just add letter as a change, increment and break?
+            # break
 
     
     # If we run out bounds, just append the remainder as a change - it cant match.
@@ -114,5 +95,43 @@ def get_diff(doc_before :str, doc_after :str, view_size :int, retrieval_buffer :
     # Show results
     comparison_collector.print_collected_data()
 
+# INPUT VARIATIONS
+
+# 1 Matching Text
+doc_before_match = 'this is a matching string, it is a simple example'
+doc_after_match = 'this is a matching string, it is a simple example'
+
+# 2 Addition Mid
+doc_before_addition = 'this is a matching string -  - it is a simple example'
+doc_after_addition = 'this is a matching string - new text inserted here - it is a simple example'
+
+# 3 Deletion Mid
+doc_before_deletion = 'this is a matching string - old text deleted here - it is a simple example'
+doc_after_deletion = 'this is a matching string -  - it is a simple example'
+
+# 4 Deletion & Addition
+doc_before_both = 'this is a *delete* piece of sample text'
+doc_after_both = 'this is a piece of sample text *add*'
+
+# 4.5 Deletion & Addition - longer after
+doc_before_both_b = 'this is a *delete* piece of sample text'
+doc_after_both_b = 'this is a piece of sample text *addddddddd*'
+
+# 5 Addition & Deletion
+doc_before_both_swap = 'this is a piece of sample text *delete*'
+doc_after_both_swap = 'this is a *add* piece of sample text'
+
+# 6 very changed mix up
+doc_before_mix = 'how now brown cow I run afoul'
+doc_after_mix = 'how new now add cow update run afoul'
+
+
 # Run
-get_diff(doc_before_both, doc_after_both, 1, 3)
+get_diff(doc_before_both_b, doc_after_both_b, 1, 3)
+
+# before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix]
+# after_set = [doc_after_match, doc_after_addition, doc_after_deletion, doc_after_both, doc_after_both_swap, doc_after_mix]
+
+# for i, var in enumerate(before_set):
+#     get_diff(before_set[i], after_set[i], 1, 3)
+#     print(' ')
