@@ -27,3 +27,4 @@ TODO
 - Is there existing other logic and approaches we can leverage? Google! text difference comparison - libraries already?
 - Text similarity could also be useful as a means to match up once again.
 - When a change occurs, can we just show both text until we match again?
+- diff worker does not work when before is longer than B and B contains an addition (so cant be found in A)
