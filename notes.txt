@@ -26,3 +26,6 @@ TODO
 - Is there existing other logic and approaches we can leverage? Google! text difference comparison - libraries already?
 - Need to do window based on word level comparison.
 - TODO try lib on new library
+- can the google diff lib have better functions for our need? better params?
+- What wrong with just dropping in all the text? 
+- why does python diff lib get SO much more on real data?

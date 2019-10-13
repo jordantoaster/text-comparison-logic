@@ -1,14 +1,12 @@
-import difflib
+import diff_match_patch as dmp_module
+dmp = dmp_module.diff_match_patch()
 
 def get_diff(doc_before :str, doc_after :str):
 
-    doc_before = doc_before.split()
-    doc_after = doc_after.split()
+    diffs = dmp.diff_main(doc_before, doc_after, checklines=False)
 
-    output_list = [li for li in difflib.ndiff(doc_before, doc_after) if li[0] != ' ']
-
-    print(len(output_list))
-    print(output_list)
+    print(len(diffs))
+    print(diffs)
 
 # INPUT VARIATIONS
 
@@ -56,8 +54,8 @@ with open('before.txt', 'r') as myfile:
 with open('after.txt', 'r') as myfile:
   doc_after_real = myfile.read()
 
+  
 get_diff(doc_before_real, doc_after_real)
-
 
 # Run
 # before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix, doc_before_l, doc_before_big, doc_before_real]
