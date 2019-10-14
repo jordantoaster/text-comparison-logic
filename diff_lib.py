@@ -1,4 +1,17 @@
+
 import difflib
+
+def get_diff_html(doc_before :str, doc_after :str):
+
+    doc_before = doc_before.split()
+    doc_after = doc_after.split()
+
+    d = difflib.HtmlDiff()
+
+    file = open('table.html', 'w')
+    file.write(d.make_table(doc_before, doc_after))
+    file.close()
+
 
 def get_diff(doc_before :str, doc_after :str):
 
@@ -7,11 +20,11 @@ def get_diff(doc_before :str, doc_after :str):
 
     output_list = [li for li in difflib.ndiff(doc_before, doc_after) if li[0] != ' ']
 
-    print(len(output_list))
     print(output_list)
+    print(len(output_list))
+
 
 # INPUT VARIATIONS
-
 # 1 Matching Text
 doc_before_match = 'this is a matching string, it is a simple example'
 doc_after_match = 'this is a matching string, it is a simple example'
@@ -56,13 +69,15 @@ with open('before.txt', 'r') as myfile:
 with open('after.txt', 'r') as myfile:
   doc_after_real = myfile.read()
 
-get_diff(doc_before_real, doc_after_real)
+get_diff_html(doc_before_real, doc_after_real)
 
 
 # Run
-# before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix, doc_before_l, doc_before_big, doc_before_real]
-# after_set = [doc_after_match, doc_after_addition, doc_after_deletion, doc_after_both, doc_after_both_swap, doc_after_mix, doc_after_l, doc_after_big, doc_after_real]
+# before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix, doc_before_l, doc_before_big]
+# after_set = [doc_after_match, doc_after_addition, doc_after_deletion, doc_after_both, doc_after_both_swap, doc_after_mix, doc_after_l, doc_after_big]
 
 # for i, var in enumerate(before_set):
 #     get_diff(before_set[i], after_set[i])
 #     print(' ')
+
+#%%

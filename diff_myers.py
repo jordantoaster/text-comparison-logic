@@ -5,8 +5,8 @@ def get_diff(doc_before :str, doc_after :str):
 
     diffs = dmp.diff_main(doc_before, doc_after, checklines=False)
 
-    print(len(diffs))
     print(diffs)
+    print(len(diffs))
 
 # INPUT VARIATIONS
 
@@ -58,8 +58,8 @@ with open('after.txt', 'r') as myfile:
 get_diff(doc_before_real, doc_after_real)
 
 # Run
-# before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix, doc_before_l, doc_before_big, doc_before_real]
-# after_set = [doc_after_match, doc_after_addition, doc_after_deletion, doc_after_both, doc_after_both_swap, doc_after_mix, doc_after_l, doc_after_big, doc_after_real]
+# before_set = [doc_before_match, doc_before_addition, doc_before_deletion, doc_before_both, doc_before_both_swap, doc_before_mix, doc_before_l, doc_before_big]
+# after_set = [doc_after_match, doc_after_addition, doc_after_deletion, doc_after_both, doc_after_both_swap, doc_after_mix, doc_after_l, doc_after_big]
 
 # for i, var in enumerate(before_set):
 #     get_diff(before_set[i], after_set[i])
